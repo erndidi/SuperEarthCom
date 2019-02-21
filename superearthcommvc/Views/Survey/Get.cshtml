@@ -1,0 +1,202 @@
+﻿@model superearthcommvc.Models.SurveyVM
+
+<section class="section" style="margin-top:0%">
+    <h2 class="title is-2">Future Client Survey</h2>
+    <br />
+    <article>
+        <p>
+            I know we're all busy, but please answer each of the questions as completely as you feel comfortable doing.  Remember, the more information I have about your ideal client, the easier it will be to drive that client to you.
+        </p>
+    </article>
+    <br />
+    <form id="surveyform">
+
+
+        @for (int idx = 0; idx < Model.Questions.Count(); idx++)
+        {
+            if (Model.Questions[idx] != " ")
+            {
+                <div class="form-group">
+                    <label class="label" asp-for="Message">@string.Concat(idx + 1, ". ", Model.Questions[idx])</label>
+                    <div class="control">
+                        <textarea class="textarea response" placeholder="Textarea"></textarea>
+                    </div>
+                    <div class="col-sm-5 messages"></div>
+                </div>
+                <br />
+            }
+
+        }
+
+
+
+
+
+        <input type="hidden" id="hdnClientID" value=@Model.ClientID />
+        <input type="hidden" id="hdnSurveyID" value=@Model.ID />
+
+
+
+
+        <div class="field is-grouped is-grouped-right">
+            <p class="control">
+                <button id="submit" name="submit" class="button is-primary" href="javascript:void(0)">
+                    Submit
+                </button>
+            </p>
+            <p class="control">
+                <a class="button is-light">
+                    Cancel
+                </a>
+            </p>
+        </div>
+    </form>
+</section>
+
+
+<div class="lds-spinner" id="spinner" style="display:none">
+    <div>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div><div></div>
+    <div></div><div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content" id="modalcontent">
+        <div class="box">
+            <article class="media">
+                <div class="media-content">
+                    <p>Thanks! I'll be sure to get back with you as soon as I can!</p>
+                    <p>In the meantime, use this <a href="https://drive.google.com/file/d/1Pm8wbPe-Gn9A_Mg7ze3MSORByh_AuhjR/view?usp=sharing">link</a> to download a free report on how to generate leads for your business or practice. </p>
+                </div>
+            </article>
+        </div>
+
+    </div>
+    <button class="modal-close is-large" id="closeModal" aria-label="close"></button>
+</div>
+
+
+
+<div class="modal" id="badModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Oops!</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        <p>
+                            There was a problem sending your request. Not to worry, just click on the  link below to send me an email.
+
+                        </p>
+                        <p>
+                            <a href="mailto: ernest.lipford@superearthcom.com">Send Email</a>
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" id="cancelBadModal">Cancel</button>
+        </footer>
+    </div>
+</div>
+<script>
+
+   
+
+    var spnr = document.getElementById('spinner');
+    // These are the constraints used to validate the form
+    document.querySelector('.modal').addEventListener('click', function () {
+        document.getElementById('modal').classList.remove('is-active');
+          window.location.href = '@Url.Action("Index", "Home")';
+        //ClearContactField();
+    });
+
+    document.getElementById('cancelBadModal').addEventListener('click', function () {
+        document.getElementById('badModal').classList.remove('is-active');
+        //ClearContactField();
+    });
+
+
+
+
+        // Hook up the form so we can prevent it from being posted
+
+        var form = document.querySelector("form#surveyform");
+        form.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            sendForm();
+            //if ((handleFormSubmit(form))){
+            //    showSuccess();
+            //}
+        });
+
+        // Hook up the inputs to validate on the fly
+
+
+
+
+    function sendForm() {
+        var _clientid = document.getElementById('hdnClientID').value;
+        var _surveyid = document.getElementById('hdnSurveyID').value;
+
+        spnr.style.display = 'block';
+        const _url = '@Url.Action("ProcessSurveyResponses", "Survey")';
+        var _responses = document.getElementsByClassName('response');
+        var _responseString;
+        for (var i = 0; i < _responses.length; i++) {
+            _responseString = _responseString + _responses[i].value;
+            if (i < _responses.length - 1) {
+                _responseString = _responseString + "~";
+            }
+        }
+        axios.post(_url, {
+
+            clientid: _clientid,
+            surveyid: _surveyid,
+            responses: _responseString
+        })
+            .then(function (response) {
+                
+                spnr.style.display = 'none';
+                if (response) {
+                    var modal = document.getElementById('modal');
+                    modal.classList.add(('is-active'))
+                }
+                else {
+                    var modal = document.getElementById('badModal');
+                    modal.classList.add(('is-active'))
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function ClearContactField() {
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('email').value = ''
+        document.getElementById('message').value = '';
+        document.getElementById('chkText').checked = false;
+        var url= '@Url.Action("Index", "Home")';
+        window.open(url);
+    }
+</script>
+
+

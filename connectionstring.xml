@@ -1,0 +1,8 @@
+
+D0ntd00th!$
+<connectionStrings>
+
+
+<add name="SuperEarthComEntities1" connectionString="metadata=res://*/DAL.Model1.csdl|res://*/DAL.Model1.ssdl|res://*/DAL.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=198.71.226.2;initial catalog=SuperEarthCom;Integrated Security=False;User ID=SEC;Password=D0ntd00th!$;Connect Timeout=15;Encrypt=False;Packet Size=4096;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+
+</connectionStrings>

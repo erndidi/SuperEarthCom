@@ -1,0 +1,21 @@
+﻿@model superearthcommvc.Models.ClientSurveyVM
+ 
+
+@Html.ActionLink("Go back to client list", "GetClientList", "Admin")
+<br />
+@for (int idx = 0; idx < Model.Questions.Count(); idx++)
+{
+    if (Model.Questions[idx] != " ")
+    {
+        <div class="form-group">
+            <label class="label" asp-for="Message">@string.Concat(idx + 1, ". ", Model.Questions[idx])</label>
+            <div class="control">
+                <textarea class="textarea response" placeholder="Textarea">@Model.Responses[idx]</textarea>
+            </div>
+            <div class="col-sm-5 messages"></div>
+        </div>
+        <br />
+    }
+
+}
+

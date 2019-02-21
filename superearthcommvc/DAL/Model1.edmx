@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SuperEarthComModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CanText" Type="bit" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="HasEngaged" Type="bit" />
+          <Property Name="Company" Type="varchar" MaxLength="100" />
+          <Property Name="Business" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="varchar" MaxLength="15" />
+          <Property Name="Specialty" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="ContactRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CanText" Type="bit" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="HasEngaged" Type="bit" />
+          <Property Name="Company" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Questions" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SurveyResponse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="SurveyID" Type="int" />
+          <Property Name="Responses" Type="varchar(max)" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__SurveyRes__Clien__267ABA7A">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="SurveyResponse" Type="Self.SurveyResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SurveyResponse">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyRes__Surve__276EDEB3">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <End Role="SurveyResponse" Type="Self.SurveyResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SurveyResponse">
+              <PropertyRef Name="SurveyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SuperEarthComModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactRequest" EntityType="Self.ContactRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyResponse" EntityType="Self.SurveyResponse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__SurveyRes__Clien__267ABA7A" Association="Self.FK__SurveyRes__Clien__267ABA7A">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="SurveyResponse" EntitySet="SurveyResponse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyRes__Surve__276EDEB3" Association="Self.FK__SurveyRes__Surve__276EDEB3">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="SurveyResponse" EntitySet="SurveyResponse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SuperEarthComModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ContactRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CanText" Type="Boolean" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HasEngaged" Type="Boolean" />
+          <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SuperEarthComEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ContactRequests" EntityType="Self.ContactRequest" />
+          <EntitySet Name="Surveys" EntityType="SuperEarthComModel.Survey" />
+          <EntitySet Name="Clients" EntityType="SuperEarthComModel.Client" />
+          <EntitySet Name="SurveyResponses" EntityType="SuperEarthComModel.SurveyResponse" />
+          <AssociationSet Name="FK__SurveyRes__Clien__267ABA7A" Association="SuperEarthComModel.FK__SurveyRes__Clien__267ABA7A">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="SurveyResponse" EntitySet="SurveyResponses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyRes__Surve__276EDEB3" Association="SuperEarthComModel.FK__SurveyRes__Surve__276EDEB3">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="SurveyResponse" EntitySet="SurveyResponses" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Questions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SurveyResponses" Relationship="SuperEarthComModel.FK__SurveyRes__Surve__276EDEB3" FromRole="Survey" ToRole="SurveyResponse" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CanText" Type="Boolean" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HasEngaged" Type="Boolean" />
+          <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Business" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Specialty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SurveyResponses" Relationship="SuperEarthComModel.FK__SurveyRes__Clien__267ABA7A" FromRole="Client" ToRole="SurveyResponse" />
+        </EntityType>
+        <EntityType Name="SurveyResponse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="SurveyID" Type="Int32" />
+          <Property Name="Responses" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Client" Relationship="SuperEarthComModel.FK__SurveyRes__Clien__267ABA7A" FromRole="SurveyResponse" ToRole="Client" />
+          <NavigationProperty Name="Survey" Relationship="SuperEarthComModel.FK__SurveyRes__Surve__276EDEB3" FromRole="SurveyResponse" ToRole="Survey" />
+        </EntityType>
+        <Association Name="FK__SurveyRes__Clien__267ABA7A">
+          <End Type="SuperEarthComModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="SuperEarthComModel.SurveyResponse" Role="SurveyResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SurveyResponse">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyRes__Surve__276EDEB3">
+          <End Type="SuperEarthComModel.Survey" Role="Survey" Multiplicity="0..1" />
+          <End Type="SuperEarthComModel.SurveyResponse" Role="SurveyResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SurveyResponse">
+              <PropertyRef Name="SurveyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SuperEarthComModelStoreContainer" CdmEntityContainer="SuperEarthComEntities1">
+          <EntitySetMapping Name="ContactRequests">
+            <EntityTypeMapping TypeName="SuperEarthComModel.ContactRequest">
+              <MappingFragment StoreEntitySet="ContactRequest">
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="HasEngaged" ColumnName="HasEngaged" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CanText" ColumnName="CanText" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surveys">
+            <EntityTypeMapping TypeName="SuperEarthComModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="Questions" ColumnName="Questions" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="SuperEarthComModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Specialty" ColumnName="Specialty" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Business" ColumnName="Business" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="HasEngaged" ColumnName="HasEngaged" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CanText" ColumnName="CanText" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyResponses">
+            <EntityTypeMapping TypeName="SuperEarthComModel.SurveyResponse">
+              <MappingFragment StoreEntitySet="SurveyResponse">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Responses" ColumnName="Responses" />
+                <ScalarProperty Name="SurveyID" ColumnName="SurveyID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,54 @@
+﻿@model superearthcommvc.Models.ClientSurveyVM
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Admin Page</h2>
+@Html.Partial("GetContractRequests")
+
+
+
+<div id="clientList" style="display:none">
+
+
+</div>
+
+<div id="clientSurvey" style="display:none">
+
+</div>
+
+
+
+
+<script>
+
+    function ReadySurvey() {
+        var elem = document.querySelector('#surveyResponseLink');
+        elem.addEventListener('click', GetSurveyResponse(elem), false);
+    }    
+      
+
+    
+    
+    function GetSurveyResponse(elem) {
+               var id = elem.innerHTML;
+        var clientList = document.querySelector('#clientList');
+        clientList.style.display = 'none';
+        var clientSurvey = document.querySelector('#clientSurvey');
+        clientSurvey.innerHTML = '';
+        const _url = '@Url.Action("GetSurveyResponse", "Survey")';
+        axios.get(_url +"?surveyResponseID="+id)
+                .then(function (response) {
+                    clientSurvey.innerHTML = clientSurvey.innerHTML + response.data;
+                    clientSurvey.style.display = 'block';
+                });
+    }
+
+   
+
+    
+
+
+
+</script>
+

@@ -1,0 +1,354 @@
+﻿@model superearthcommvc.Models.ContactVM
+
+<h4 class="title is-4">Contact Me</h4>
+<hr />
+
+<form id="contactform">
+
+
+    <div class="form-group">
+        <label class="label" asp-for="Name">Name</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input is-success" id="name" name="name" asp-for="Name" type="text" placeholder="Name">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+        </div>
+        <div class="col-sm-5 messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="label" asp-for="Name">Business</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input is-success" id="business" name="business" asp-for="Business" type="text" placeholder="Business">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+        </div>
+        <div class="col-sm-5 messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="label" asp-for="Email">Email</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" id="email" name="email" asp-for="Email" type="email" placeholder="Email">
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+        </div>
+        <div class="messages"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="label" asp-for="Phone">Phone</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" id="phone" asp-for="Phone" placeholder="Phone input" value="">
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+        </div>
+        <div class="col-sm-5 messages"></div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox" id="chkText">
+                Text is ok.
+            </label>
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="label" asp-for="Message">Message</label>
+        <div class="control">
+            <textarea class="textarea" id="message" name="message" asp-for="Message" placeholder="Textarea"></textarea>
+        </div>
+        <div class="col-sm-5 messages"></div>
+    </div>
+    <br />
+    <div class="field is-grouped is-grouped-right">
+        <p class="control">
+            <button id="submit" name="submit" class="button is-primary" href="javascript:void(0)">
+                Submit
+            </button>
+        </p>
+        <p class="control">
+            <a class="button is-light">
+                Cancel
+            </a>
+        </p>
+    </div>
+</form>
+
+
+<div class="modal" id="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content" id="modalcontent">
+        <div class="box">
+            <article class="media">
+                <div class="media-content">
+                    <p>Thanks! I'll be sure to get back with you as soon as I can!</p>
+                </div>
+            </article>
+        </div>
+
+    </div>
+    <button class="modal-close is-large" id="closeModal" aria-label="close"></button>
+</div>
+
+
+
+<div class="modal" id="badModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Oops!</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        <p>
+                            There was a problem sending your request. Not to worry, just click on the  link below to send me an email.
+
+                        </p>
+                        <p>
+                            <a href="mailto: ernest.lipford@superearthcom.com">Send Email</a>
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" id="cancelBadModal">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+
+<div class="lds-spinner" id="spinner" style="display:none">
+    <div>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div><div></div>
+    <div></div><div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<script>
+    var spnr = document.getElementById('spinner');
+    document.getElementById('phone').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+
+    // These are the constraints used to validate the form
+    document.getElementById('closeModal').addEventListener('click', function () {
+        document.getElementById('modal').classList.remove('is-active');
+        ClearContactField();
+    });
+
+    document.getElementById('cancelBadModal').addEventListener('click', function () {
+        document.getElementById('badModal').classList.remove('is-active');
+        ClearContactField();
+    });
+
+    (function () {
+        // Before using it we must add the parse and format functions
+        // Here is a sample implementation using moment.js
+        validate.extend(validate.validators.datetime, {
+            // The value is guaranteed not to be null or undefined but otherwise it
+            // could be anything.
+            parse: function (value, options) {
+                return +moment.utc(value);
+            },
+            // Input is a unix timestamp
+            format: function (value, options) {
+                var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
+                return moment.utc(value).format(format);
+            }
+        });
+
+        // These are the constraints used to validate the form
+        var constraints = {
+            email: {
+                presence: true,
+                email: true
+            },
+            name: {
+                presence: true,
+                length: {
+                    minimum: 5
+                }
+            },
+            message: {
+                presence: false,
+                length:{
+                    minimum: 8
+                }
+            }
+
+
+        };
+
+
+        // Hook up the form so we can prevent it from being posted
+
+        var form = document.querySelector("form#contactform");
+        form.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            sendForm();
+            //if ((handleFormSubmit(form))){
+            //    showSuccess();
+            //}
+        });
+
+        // Hook up the inputs to validate on the fly
+
+
+        var inputs = Array.from(document.querySelectorAll("input, textarea, select"));
+        for (var i = 0; i < inputs.length; ++i) {
+            inputs[i].addEventListener("change", function (ev) {
+                var errors = validate(form, constraints) || {};
+                showErrorsForInput(this, errors[this.name])
+            });
+        }
+
+        function handleFormSubmit(form, input) {
+            // validate the form aainst the constraints
+            var errors = validate(form, constraints);
+            // then we update the form to reflect the results
+            showErrors(form, errors || {});
+            return errors;
+        }
+
+        // Updates the inputs with the validation errors
+        function showErrors(_form, errors) {
+            // We loop through all the inputs and show the errors for that input
+
+            var form = Array.from(document.querySelectorAll("input[name], select[name]"));
+            form.forEach(function (input) {
+                // Since the errors can be null if no errors were found we need to handle
+                // that
+                showErrorsForInput(input, errors && errors[input.name]);
+            });
+        }
+
+        // Shows the errors for a specific input
+        function showErrorsForInput(input, errors) {
+            // This is the root of the input
+            var formGroup = closestParent(input.parentNode, "form-group")
+                // Find where the error messages will be insert into
+                , messages = formGroup.querySelector(".messages");
+            // First we remove any old messages and resets the classes
+            resetFormGroup(formGroup);
+            // If we have errors
+            if (errors) {
+                // we first mark the group has having errors
+                formGroup.classList.add("has-error");
+                // then we append all the errors
+                var _errors = Array.from(errors);
+                _errors.forEach(function (err) {
+                    addError(messages, err);
+                });
+            } else {
+                // otherwise we simply mark it as success
+                formGroup.classList.add("has-success");
+            }
+        }
+
+        // Recusively finds the closest parent that has the specified class
+        function closestParent(child, className) {
+            if (!child || child == document) {
+                return null;
+            }
+            if (child.classList.contains(className)) {
+                return child;
+            } else {
+                return closestParent(child.parentNode, className);
+            }
+        }
+
+        function resetFormGroup(formGroup) {
+            // Remove the success and error classes
+            formGroup.classList.remove("has-error");
+            formGroup.classList.remove("has-success");
+            // and remove any old messages
+            var _formgroup = Array.from(formGroup.querySelectorAll(".help-block.error"));
+            _formgroup.forEach(function (el) {
+                el.parentNode.removeChild(el);
+            });
+        }
+
+        // Adds the specified error with the following markup
+        // <p class="help-block error">[message]</p>
+        function addError(messages, error) {
+            var block = document.createElement("p");
+            block.classList.add("help-block");
+            block.classList.add("error");
+            block.innerText = error;
+            messages.appendChild(block);
+        }
+
+        function sendForm() {
+            spnr.style.display = 'block';
+            const _url = '@Url.Action("SendEmail", "Home")';
+            var canTxt = document.getElementById('chkText').checked;
+            axios.post(_url, {
+
+                Name: document.getElementById('name').value,
+                Business: document.getElementById('business').value,
+                    Phone:      document.getElementById('phone').value,
+                    Email:      document.getElementById('email').value,
+                    Message:    document.getElementById('message').value,
+                    CanText:    canTxt
+
+
+
+            })
+                .then(function (response) {
+                    spnr.style.display = 'none';
+                    if (response) {
+                        var modal = document.getElementById('modal');
+                        modal.classList.add(('is-active'))
+                    }
+                    else {
+                        var modal = document.getElementById('badModal');
+                        modal.classList.add(('is-active'))
+                    }
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    })  ();
+
+    function ClearContactField() {
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('email').value = ''
+        document.getElementById('message').value = '';
+        document.getElementById('chkText').checked = false;
+    }
+</script>

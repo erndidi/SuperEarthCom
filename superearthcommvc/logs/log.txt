@@ -1,0 +1,24 @@
+10:10:58 AMemail sent
+1:16:04 PM email sent
+3:54:46 PM email sent
+Sunday, January 6, 2019 :
+Sunday, January 6, 2019 :Failure sending mail.
+Friday, January 11, 2019 :Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+Friday, January 11, 2019 :Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+Name: ernest w. lipford
+Phone: (615) 496-3898
+Email: erndidi@gmail.com
+Message: dfgsdfgsdfgsdfgsdgsd
+Name: True
+Name: ernest lipford
+Phone: (615) 496-3898
+Email: ernest.lipford@superearthcom.com
+Message: asdfasdfasdfasfasfasfd
+Name: True
+Name: Ernest W Lipford
+Phone: (615) 496-3898
+Email: erndidi@gmail.com
+Message: sdfgsdgfsdgdsg
+Name: False
+Sunday, February 3, 2019 :Value cannot be null.
+Parameter name: address

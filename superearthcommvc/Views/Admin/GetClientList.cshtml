@@ -1,0 +1,74 @@
+﻿@model superearthcommvc.Models.ClientSurveysVM
+
+@{
+    ViewBag.Title = "GetClientList";
+}
+
+<h2>GetClientList</h2>
+<br />
+<a href="window.open('@Url.Action("GetClientList","Admin")')">Go back to client list</a>
+
+<table class="table is-striped is-hoverable" id="tblContactRequest">
+    <thead>
+        <tr>
+            <th>
+                Client ID
+            </th>
+            <th>
+                Survey ID
+            </th>
+            <th>
+                Response ID
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Email
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clientSurvey in Model.ClientSurveyList)
+        {
+            <tr>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value=@clientSurvey.ClientID readonly />
+                </td>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value=@clientSurvey.SurveyID readonly />
+                </td>
+                <td>
+                    <a href='@Url.Action("GetSurveyResponse","Survey", new { surveyResponseID = clientSurvey.SurveyResponseID })'>@clientSurvey.SurveyResponseID</a>
+                </td>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value='@clientSurvey.FirstName' readonly />
+                </td>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value='@clientSurvey.LastName' readonly />
+                </td>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value='@clientSurvey.Phone' readonly />
+                </td>
+                <td>
+                    <input class="input is-success" id="name" asp-for="Name" type="text" value='@clientSurvey.Email' readonly />
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+
+
+</table>
+
+
+
+
+
