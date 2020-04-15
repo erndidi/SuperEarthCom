@@ -62,15 +62,22 @@
         <div class="col-sm-5 messages"></div>
     </div>
     <br />
+
+
     <div class="form-group">
-        <div class="control">
-            <label class="checkbox">
-                <input type="checkbox" id="chkText">
-                Text is ok.
-            </label>
+        <label class="label" asp-for="Email">Email</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" id="subject" name="subject" asp-for="Subject" type="text" placeholder="Subject" value="Information Please">
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
         </div>
+        <div class="messages"></div>
     </div>
-    <br />
+
 
     <div class="form-group">
         <label class="label" asp-for="Message">Message</label>
@@ -80,9 +87,9 @@
         <div class="col-sm-5 messages"></div>
     </div>
     <br />
-    <div class="field is-grouped is-grouped-right">
+    <div class="field is-grouped is-grouped-left">
         <p class="control">
-            <button id="submit" name="submit" class="button is-primary" href="javascript:void(0)">
+            <button id="submit" name="submit" class="button" href="javascript:void(0)">
                 Submit
             </button>
         </p>
@@ -312,16 +319,14 @@
 
         function sendForm() {
             spnr.style.display = 'block';
-            const _url = '@Url.Action("SendEmail", "Home")';
-            var canTxt = document.getElementById('chkText').checked;
+            const _url = '@Url.Action("SendEmail", "Home")';           
             axios.post(_url, {
 
                 Name: document.getElementById('name').value,
                 Business: document.getElementById('business').value,
                     Phone:      document.getElementById('phone').value,
                     Email:      document.getElementById('email').value,
-                    Message:    document.getElementById('message').value,
-                    CanText:    canTxt
+                    Message:    document.getElementById('message').value
 
 
 

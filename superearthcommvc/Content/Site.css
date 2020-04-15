@@ -20,6 +20,9 @@ p {
     word-spacing: 0.25em;
     text-align: left; /* ragged right */
     text-indent: 10%;
+    font-size: 1rem;
+    letter-spacing: .05rem;
+    line-height: 1.6;
 }
 
 .navbar {
@@ -385,20 +388,21 @@ p {
         }
 
     .button {
-        padding: 15px 25px;
-        font-size: 24px;
+        padding: 7px 14px;
+        font-size: 12px;
         text-align: center;
         cursor: pointer;
         outline: none;
         color: #fff;
-        background-color: #4CAF50;
+        background-color: #3E4ACD;
         border: none;
         border-radius: 15px;
         box-shadow: 0 9px #999;
+        width: 100%;
     }
 
         .button:hover {
-            background-color: #3e8e41
+            background-color: #2898ed
         }
 
         .button:active {
@@ -406,4 +410,10 @@ p {
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
+
+    @media screen and (max-width: 600px) {
+        .button {
+            background-color: #3E4ACD;
+        }
+    }
 }

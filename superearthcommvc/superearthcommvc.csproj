@@ -242,6 +242,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="logs\log.txt" />
     <Content Include="logs\request.txt" />
+    <Content Include="Scripts\axios.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -260,6 +261,7 @@
     <None Include="Properties\PublishProfiles\superearthcom.com - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\superearthcom.com - Web Deploy3.pubxml" />
     <None Include="Properties\PublishProfiles\superearthcom.com - Web Deploy4.pubxml" />
+    <Content Include="Scripts\axios.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bulma-extensions.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

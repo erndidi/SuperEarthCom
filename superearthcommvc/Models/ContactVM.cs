@@ -7,6 +7,7 @@ namespace superearthcommvc.Models
         public string Phone{get;set;}
         public bool CanText{get;set;}
         public string Email{get;set;}
+        public string Subject { get; set; }
         public string Message{get;set;}
         public bool? HasEngaged { get; set; }
     }

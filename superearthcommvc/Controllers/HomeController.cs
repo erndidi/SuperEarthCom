@@ -41,15 +41,12 @@ namespace superearthcomdotnet.Controllers
             string reqPath = Server.MapPath("~/logs/request.txt");
             try
             {
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress(contact.Email);
-
-                message.To.Add(new MailAddress("ernest.lipford@superearthcom.com"));
-
-                message.Subject = "potentianl client";
-                message.Body = contact.Message;
-
-                SmtpClient client = new SmtpClient();
+                string from = contact.Email;
+                string to = "ernest@superearthcom.com";
+                MailMessage message = new MailMessage(contact.Email, to, contact.Subject, contact.Message);
+                SmtpClient client = new SmtpClient("mail.superearthcom.com", 465);
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("ernest@superearthcom.com", "Ketpeck68002022");
                 client.Send(message);
 
             }
@@ -57,7 +54,7 @@ namespace superearthcomdotnet.Controllers
             {
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
-                    writer.WriteLine(string.Concat(DateTime.Now.ToLongDateString(), " :", ex.Message));
+                    writer.WriteLine(string.Concat(DateTime.Now.ToLongDateString(), " :", ex.Message," stack trace: ",ex.StackTrace));
                     sentSucceeded = false;
                 }
             }
